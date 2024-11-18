@@ -1,0 +1,74 @@
+.form-container {
+  padding-top: 0;
+}
+
+label, .form-span {
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+input {
+  font-size: 20px;
+  max-width: 100%;
+}
+
+.input-img {
+  display: none;
+}
+
+.absolute-image {
+  z-index: 1;
+  width: 20%;
+  
+}
+
+.lbl-upload-button {
+  width: 161px;
+  height: 161px;
+}
+
+.upload-button {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.upload-button:hover {
+  cursor: pointer;
+  box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.25);
+  opacity: 0.5;
+}
+
+.upload-text:hover {
+  cursor: pointer;
+  text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+  opacity: 0.5;
+}
+
+.fileName {
+  display: block;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #666;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.button-register {
+  border: 0;
+  color: white;
+}
+
+.button-register.bg-main-color:hover {
+  background-color: white;
+  color: #B98E6E;
+}
+
+.button-register.bg-main-2-color:hover {
+  background-color: white;
+  color: #71a281;
+}
