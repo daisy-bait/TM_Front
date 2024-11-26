@@ -1,5 +1,5 @@
 
-package co.edu.usco.TM.controller;
+package co.edu.usco.TM.controller.admin;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

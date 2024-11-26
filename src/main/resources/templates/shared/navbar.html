@@ -4,29 +4,39 @@
         <nav class="navbar navbar-expand-xxl first-bar">
             <div class="container-fluid">
                 <a class="navbar-brand" th:href="@{/}"><img class="icon-home" th:src="@{/icons/home-icon.svg}"
-                                                      alt="Ir a Inicio" /></a>
+                                                      th:alt="#{navbar.homealt}" /></a>
                 <button class="navbar-toggler bg-body-secondary" type="button" data-bs-toggle="collapse"
                         data-bs-target="#nav-elements" aria-controls="navbarSupportedContent" aria-expanded="false"
-                        aria-label="Desplegar menú"><span class="navbar-toggler-icon"></span></button>
+                        th:aria-label="#{navbar.toggleraria}"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="nav-elements">
                     <form class="d-flex align-items-center search-box ms-3" role="search">
-                        <img th:src="@{/icons/search-icon.svg}" alt="Buscar productos de mascotas" />
-                        <input class="form-control border-0" type="search" placeholder="¿Qué necesita tu mascota?">
+                        <img th:src="@{/icons/search-icon.svg}" th:alt="#{navbar.iconsearchalt}" />
+                        <input class="form-control border-0" type="search" th:placeholder="#{navbar.searchplaceholder}">
                     </form>
                     <ol class="navbar-nav ms-xxl-auto mb-3 mb-xxl-0 d-flex align-items-center">
                         <li class="nav-item d-flex align-items-center">
-                            <a class="nav-link active pe-0" href="#">
-                                <img th:src="@{/icons/ubi-cute.svg}" />
+                            <a th:if="${isLoggedIn && #string.isEmpty(user.address)}" class="nav-link active pe-0" th:href="${roles.contains('ROLE_VET')} ? '/vet/modify' : '/owner/modify'">
+                                <img th:if="${isLoggedIn}" th:src="@{/icons/ubi-cute.svg}" th:alt="#{navbar.ubicutealt}" />
                             </a>
-                            <a class="nav-link active ps-1" href="#">
-                                <span class="p-2">Agregar Dirección</span>
+                            <a th:if="${isLoggedIn && #strings.isEmpty(user.address)}" class="nav-link active ps-1" th:href="${roles.contains('ROLE_VET')} ? '/vet/modify' : '/owner/modify'">
+                                <span class="p-2" th:text="#{navbar.ubiadd}"></span>
+                            </a>
+                            <a th:if="${isLoggedIn}" class="nav-link active ps-1" th:href="@{/logout}">
+                                <span class="p-2" th:text="#{navbar.logout}"></span>
+                            </a>
+                            <a th:if="${!isLoggedIn}" class="nav-link active ps-1" th:href="@{/login}">
+                                <span class="p-2" th:text="#{navbar.login}"></span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" th:href="@{/owner/register}"><span class="p-2">Crear Cuenta</span></a>
+                            <a th:if="${!isLoggedIn}" class="nav-link active" th:href="@{/owner/register}"><span class="p-2" th:text="#{navbar.register}"></span></a>
                         </li>
                         <li class="nav-item">
-                            <a th:href="@{/login}"><img th:src="@{/icons/user-icon.svg}" alt="User Icon" /></a>
+                            <a th:if="${!isLoggedIn}" class="nav-link active" th:href="@{/vet/register}"><span class="p-2" th:text="#{navbar.registervet}"></span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a th:if="${!isLoggedIn}" th:href="@{/login}"><img th:src="@{/icons/user-icon.svg}" th:alt="#{navbar.login}" /></a>
+                            <a th:if="${isLoggedIn}" th:href="@{/user/dashboard}"><img th:src="${#strings.isEmpty(user.imgURL) ? '/icons/user-icon.svg' : user.imgURL}" th:classappend="${#strings.isEmpty(user.imgURL) ? '' : 'user-icon'}" th:alt="#{navbar.dashboardalt}" /></a>
                         </li>
                     </ol>
                 </div>
@@ -36,13 +46,23 @@
             <div class="container-fluid">
                 <div class="dropdown">
                     <button class="button-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span>Servicios</span>
+                        <span th:text="#{navbar.services}"></span>
                     </button>
                     <ul class="dropdown-menu mt-2">
-                        <li><a class="dropdown-item px-0 px-4 py-2" href="#"><span>Administración de mascotas</span></a></li>
-                        <li><a class="dropdown-item px-0 px-4 py-2 my-2" href="#"><span>Productos para tus peludos</span></a></li>
-                        <li><a class="dropdown-item px-0 px-4 py-2 my-2" href="#"><span>Contacta con un veterinario</span></a></li>
-                        <li><a class="dropdown-item px-0 px-4 py-2 bg-red" href="#"><span>Cita Urgente</span></a></li>
+                        <li><a class="dropdown-item px-0 px-4 py-2" th:href="@{/pet/list}"><span th:text="#{navbar.services1}"></span></a></li>
+                        <li><a class="dropdown-item px-0 px-4 py-2 my-2" th:href="@{/owner/contact/list}"><span th:text="#{navbar.services3}"></span></a></li>
+                        <li><a class="dropdown-item px-0 px-4 py-2 bg-red" th:href="@{/owner/contact/list}"><span th:text="#{navbar.services4}"></span></a></li>
+                    </ul>
+                </div>
+                <div class="dropdown">
+                    <button class="button-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span th:text="#{navbar.langs}"></span>
+                    </button>
+                    <ul class="dropdown-menu mt-2">
+                        <li><a class="dropdown-item px-0 px-4 py-2" th:href="@{?lang=es}"><span th:text="#{navbar.lang1}"></span></a></li>
+                        <li><a class="dropdown-item px-0 px-4 py-2 my-2" th:href="@{?lang=en}"><span th:text="#{navbar.lang2}"></span></a></li>
+                        <li><a class="dropdown-item px-0 px-4 py-2 my-2" th:href="@{?lang=pt}"><span th:text="#{navbar.lang3}"></span></a></li>
+                        <li><a class="dropdown-item px-0 px-4 py-2" th:href="@{?lang=fr}"><span th:text="#{navbar.lang4}"></span></a></li>
                     </ul>
                 </div>
             </div>

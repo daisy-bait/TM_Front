@@ -1,11 +1,13 @@
 
 package co.edu.usco.TM.dto.request.veterinary;
 
-import co.edu.usco.TM.dto.appointment.PetSpecie;
-import co.edu.usco.TM.dto.response.veterinary.ResOwnerDTO;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -16,14 +18,15 @@ import java.time.LocalDate;
 public class ReqPetDTO {
 
     @NotEmpty
+    @NotNull
     private String name;
     @NotEmpty
-    private PetSpecie specie;
+    @NotNull
+    private String specie;
     @Positive
     private Double weight;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
-
-    private ResOwnerDTO owner;
+    private String imgURL;
 
 }

@@ -1,8 +1,9 @@
 
 package co.edu.usco.TM.dto.response.veterinary;
 
-import co.edu.usco.TM.dto.appointment.PetSpecie;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import co.edu.usco.TM.dto.response.user.ResUserDTO;
+import co.edu.usco.TM.dto.shared.PetSpecie;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,14 +15,16 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class ResPetDTO {
 
+    private Long id;
     private String name;
     private PetSpecie specie;
     private Double weight;
     private int years;
     private int months;
+
     private LocalDate birthDate;
 
-    @JsonBackReference
-    private ResOwnerDTO owner;
+    @JsonIgnoreProperties({"pets", "userAppointments"})
+    private ResUserDTO owner;
 
 }

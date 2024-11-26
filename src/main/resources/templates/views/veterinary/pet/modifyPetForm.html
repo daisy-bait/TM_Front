@@ -2,89 +2,101 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org", xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Formulario para registro de mascotas" />
-  <link rel="icon" th:href="@{/icons/logo.svg}" type="image/x-icon" />
-  <link rel="apple-touch-icon" th:href="@{/icons/logo.svg}" type="image/x-icon" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
-  <link rel="stylesheet" th:href="@{/styles/login.css}" />
-  <link rel="stylesheet" th:href="@{/styles/global.css}" />
-  <link rel="stylesheet" th:href="@{/styles/sign-up.css}" />
-  <title>Regístrar mascota</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" th:content="#{petform.content}"/>
+    <link rel="icon" th:href="@{/icons/logo.svg}" type="image/x-icon"/>
+    <link rel="apple-touch-icon" th:href="@{/icons/logo.svg}" type="image/x-icon"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"/>
+    <link rel="stylesheet" th:href="@{/styles/login.css}"/>
+    <link rel="stylesheet" th:href="@{/styles/global.css}"/>
+    <link rel="stylesheet" th:href="@{/styles/sign-up.css}"/>
+    <title th:if="${action == 'modify'}" th:text="#{petform.titlemodify}"></title>
+    <title th:if="${action != 'modify'}" th:text="#{petform.titleregister}"></title>
 </head>
 <body class="bg-main-2-color">
 <header th:replace="shared/navbar :: navbar"></header>
 <main class="container justify-content-center align-items-center">
-  <div class="card mb-5">
-    <div class="card-title pt-4 text-center">
-      <h2 class="dark-green" th:text="${action == 'modify'} ? 'Modifica sus Datos' : 'Registra a tu compañero!'"></h2>
-    </div>
-    <div class="card-body px-0 text-center text-xxl-start">
-      <form method="post" th:action="${action == 'modify'} ? @{/pet/modify} : @{/pet/create}" th:object="${newPet}" enctype="multipart/form-data"> <!-- Formulario -->
-        <div class="row row-cols-xxl-2 px-5 mb-3 justify-content-center"> <!-- Fila General -->
-          <div class="col col-xxl-4 me-xxl-3"> <!-- Columna 1 -->
-            <div class="row row-cols-1"> <!-- Fila 1 -->
-              <span class="form-span contorn-2-color mb-4">Obligatorio</span>
+    <div class="card mb-5">
+        <div class="card-title pt-4 text-center">
+            <h2 th:if="${action == 'modify'}"  class="dark-green"
+                th:text="#{petform.title2modify}"></h2>
+            <h2 th:if="${action != 'modify'}"  class="dark-green"
+                th:text="#{petform.title2register}"></h2>
+        </div>
+        <div class="card-body px-0 text-center text-xxl-start">
+            <form method="post" th:action="${action == 'modify'} ? @{'/pet/modify/' + ${id}} : @{/pet/create}"
+                  th:object="${newPet}" enctype="multipart/form-data"> <!-- Formulario -->
+                <div class="row row-cols-xxl-2 px-5 mb-3 justify-content-center"> <!-- Fila General -->
+                    <div class="col col-xxl-4 me-xxl-3"> <!-- Columna 1 -->
+                        <div class="row row-cols-1"> <!-- Fila 1 -->
+                            <span class="form-span contorn-2-color mb-4" th:text="#{petform.obligatory}"></span>
 
-              <div class="col col-12">
-                <label for="name" class="col-12 ms-xxl-4">Nombre</label>
-                <input type="text" class="mb-3 mb-xxl-4" name="name" id="name" th:field="*{name}"
-                       placeholder="Ingresa su nombre..." />
+                            <div class="col col-12">
+                                <label for="name" class="col-12 ms-xxl-4" th:text="#{petform.lblname}"></label>
+                                <input type="text" class="mb-3 mb-xxl-4" name="name" id="name" th:field="*{name}"
+                                       th:placeholder="#{petform.nameplaceholder}"/>
 
-                <label for="specie" class="col-12 ms-xxl-4">Tipo de mascota</label>
-                <div class="select-container d-inline-flex align-items-center justify-content-end">
-                  <select name="specie" id="specie" th:field="*{specie}"
-                          aria-label="Selecciona tu tipo de mascota">
-                    <option value="" selected disabled>Seleccionar</option>
-                    <option value="CAT">Gato</option>
-                    <option value="DOG">Perro</option>
-                    <option value="FISH">Pez</option>
-                    <option value="RODENT">Roedor</option>
-                  </select>
-                  <div class="position-absolute mt-2 me-3">
-                    <img th:src="@{/icons/select-icon.svg}" alt="Icono para seleccionar">
-                  </div>
+                                <label for="specie" class="col-12 ms-xxl-4" th:text="#{petform.lblspecie}"></label>
+                                <div class="select-container d-inline-flex align-items-center justify-content-end">
+                                    <select name="specie" id="specie" th:field="*{specie}"
+                                            th:aria-label="#{petform.ariaspecie}">
+                                        <option value="" selected disabled th:text="#{petform.select}"></option>
+                                        <option value="CAT" th:text="#{petform.selectcat}"></option>
+                                        <option value="DOG" th:text="#{petform.selectdog}"></option>
+                                        <option value="FISH" th:text="#{petform.selectfish}"></option>
+                                        <option value="RODENT" th:text="#{petform.selectrodent}"></option>
+                                    </select>
+                                    <div class="position-absolute mt-2 me-3">
+                                        <img th:src="@{/icons/select-icon.svg}" th:alt="#{petform.selecticon}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-xxl-5 ps-xxl-4 border-xxl-start border-dark-subtle"> <!-- Columna 2 -->
+                        <div class="row">
+                            <span class="form-span contorn-2-color mt-5 mt-xl-0 mb-4"
+                                  th:text="#{petform.optional}"></span>
+
+                            <div class="col-12">
+                                <label for="weight" class="col-12 ms-xxl-4" th:text="#{petform.lblweight}"></label>
+                                <input type="text" class="mb-3 mb-xxl-4 col-xl-9" name="weight" id="weight"
+                                       th:field="*{weight}"
+                                       th:placeholder="#{petform.weightplaceholder}"/>
+                                <span class="form-span ms-2" th:text="#{petform.kg}"></span>
+                            </div>
+
+                            <div class="col-12">
+                                <label for="birth-date" class="ms-xxl-4" th:text="#{petform.lblbirthdate}"></label>
+                                <input type="date" class="mb-3 mb-xxl-4 col-xl-10" name="birth-date" id="birth-date"
+                                       th:field="*{birthDate}"/>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-12 col-xxl-2 text-center mt-xxl-5 ps-xxl-0">
+                        <label for="imgUpload" class="upload-text mb-3 col-12 mt-0"
+                               th:text="#{petform.lblimage}"></label>
+                        <label for="imgUpload" class="lbl-upload-button">
+                            <img id="preview" th:src="@{/images/upload-image.svg}" class="upload-button"
+                                 th:alt="#{petform.altimage}">
+                        </label>
+                        <input class="input-img" id="imgUpload" type="file" name="file" accept=".png, .jpg, .jpeg"
+                               onchange="previewImage(event)">
+                        <span id="fileName" class="fileName" th:text="#{petform.namefile}"></span>
+                    </div>
                 </div>
-              </div>
-            </div>
-          </div>
-          <div class="col col-xxl-5 ps-xxl-4 border-xxl-start border-dark-subtle"> <!-- Columna 2 -->
-            <div class="row">
-              <span class="form-span contorn-2-color mt-5 mt-xl-0 mb-4">Opcional (Puede agregarse luego)</span>
-
-              <div class="col-12">
-                <label for="weight" class="col-12 ms-xxl-4">Peso</label>
-                <input type="text" class="mb-3 mb-xxl-4 col-xl-9" name="weight" id="weight" th:field="*{weight}"
-                       placeholder="Ingresa su peso..." />
-                <span class="form-span ms-2">Kg</span>
-              </div>
-
-              <div class="col-12">
-                <label for="birth-date" class="ms-xxl-4">Fecha de cumpleaños</label>
-                <input type="date" class="mb-3 mb-xxl-4 col-xl-10" name="birth-date" id="birth-date" th:field="*{birthDate}"/>
-              </div>
-
-            </div>
-          </div>
-          <div class="col-12 col-xxl-2 text-center mt-xxl-5 ps-xxl-0">
-            <label for="imgUpload" class="upload-text mb-3 col-12 mt-0">Foto de tu amigo</label>
-            <label for="imgUpload" class="lbl-upload-button">
-              <img id="preview" th:src="@{/images/upload-image.svg}" class="upload-button"
-                   alt="Oprima aquí para subir su imágen de perfil">
-            </label>
-            <input class="input-img" id="imgUpload" type="file" name="file" accept=".png, .jpg, .jpeg"
-                   onchange="previewImage(event)">
-            <span id="fileName" class="fileName">Sin selección</span>
-          </div>
+                <div class="row alig-items-center justify-content-center text-center mb-3">
+                    <span th:if="${action == 'modify'}"><input type="submit" th:value="#{petform.updatesubmit}"
+                                                               class="button-register bg-main-2-color"></span>
+                    <span th:if="${action != 'modify'}"><input type="submit" th:value="#{petform.registersubmit}"
+                                                               class="button-register bg-main-2-color"></span>
+                </div>
+            </form>
         </div>
-        <div class="row alig-items-center justify-content-center text-center mb-3">
-          <span><input type="submit" th:value="${action == 'modify'} ? 'Actualizar' : 'Registrar'" class="button-register bg-main-2-color"></span>
-        </div>
-      </form>
     </div>
-  </div>
 </main>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"

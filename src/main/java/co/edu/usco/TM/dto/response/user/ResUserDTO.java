@@ -1,7 +1,13 @@
 
 package co.edu.usco.TM.dto.response.user;
 
-import lombok.*;
+import co.edu.usco.TM.dto.response.veterinary.ResPetDTO;
+import co.edu.usco.TM.dto.shared.appointment.AppointmentDTO;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -12,6 +18,11 @@ public class ResUserDTO {
     private String username;
     private String name;
     private String email;
-    private String role;
+    private String address;
+    private String zipCode;
+    private String phone;
     private String imgURL;
+
+    private List<ResPetDTO> pets;
+    private List<AppointmentDTO> userAppointments;
 }

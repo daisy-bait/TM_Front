@@ -67,6 +67,10 @@
   background-color: var(--main-color);
 }
 
+.bg-contorn-2-color {
+  background-color: var(--contorn-2-color);
+}
+
 .bg-fill-color {
   background-color: var(--fill-color);
 }
@@ -85,6 +89,10 @@
 
 a.bg-fill-color:hover span {
   color: var(--fill-color);
+}
+
+a.bg-contorn-2-color:hover span {
+  color: var(--contorn-2-color);
 }
 
 a.bg-main-2-color:hover span {
@@ -146,7 +154,7 @@ nav .container-fluid {
   background-color: #fff;
 }
 
-nav span {
+.first-bar span, .second-bar span {
   color: #ffffff;
   font-size: 20px;
   font-style: normal;
@@ -270,8 +278,62 @@ p {
   border: 34px solid var(--contorn-color);
 }
 
+.user-icon {
+  width: 70px;
+  border-radius: 45%;
+  border: 5px solid var(--contorn-color);
+  object-fit: cover;
+}
+
 img {
   max-width: 100%;
+}
+
+.input-search, .input-select {
+  font-weight: 500;
+  font-size: 20px;
+  padding: 0 30px;
+  border-radius: 12px;
+  height: 50px;
+  width: 300px;
+  margin-top: 10px;
+  border: 2px solid #adb5bd;
+  appearance: none;
+}
+
+.input-search:hover, .input-select:hover {
+  border: 4px solid var(--main-color);
+  outline: none;
+  box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.25);
+}
+
+.button-search {
+  background-color: var(--main-2-color);
+  color: #fff;
+  font-size: 20px;
+  font-weight: 500;
+  height: 50px;
+  border-radius: 12px;
+  border: 0;
+  padding: 8px 16px;
+}
+
+.button-search:hover span {
+  color: var(--main-2-color);
+}
+
+.button-search:hover {
+  background-color: #fff;
+  box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.25);
+}
+
+.alert-tooltip {
+  --bs-tooltip-bg: #721c24;
+  --bs-tooltip-color: #f8d7da;
+}
+
+.alert-tooltip .arrow::before {
+  border-color: #721c24; /* Flecha del tooltip */
 }
 
 /* Para navegadores WebKit como Chrome y Safari */
